@@ -27,6 +27,7 @@ const SearchBar: React.FC<Props> = ({ onSearch }) => {
 
   return (
     <TextField
+      
       fullWidth
       variant="outlined"
       placeholder="Buscar..."

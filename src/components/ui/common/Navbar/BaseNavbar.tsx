@@ -1,29 +1,29 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Divider from '@mui/material/Divider';
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import Divider from "@mui/material/Divider";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import { Link } from "react-router-dom";
 import "../../../../Styles/Variables.css";
-import { NavItem } from 'react-bootstrap';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { useAppSelector } from '../../../../hooks/redux';
-import { useDispatch } from 'react-redux';
-import { getTotals } from '../../../../redux/slices/CartReducer';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '@mui/material';
+import { NavItem } from "react-bootstrap";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import { useAppSelector } from "../../../../hooks/redux";
+import { useDispatch } from "react-redux";
+import { getTotals } from "../../../../redux/slices/CartReducer";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "@mui/material";
 
 export default function PrimarySearchAppBar() {
   const { user, isAuthenticated } = useAuth0();
-  
+
   const { loginWithRedirect, logout, getAccessTokenSilently } = useAuth0();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,64 +33,73 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleProfileMenuOpen = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     setAnchorEl(event.currentTarget as HTMLElement | null | any);
   };
-
 
   // NO BORRAR YA QUE DE ESTA FORMA SE OBTIENE EL TOKEN DEL USUARIO
   const callApi = async () => {
     //   ------OBTENER EL TOKEN DEL USUARIO-------
-
     // let token = await getAccessTokenSilently({
     //   authorizationParams : {
     //     audience: import.meta.env.VITE_AUTH0_AUDIENCE,
     //   }
     // });
-  }
-  
-  React.useEffect(() => 
-    {
-      callApi();
-    }, [cart, dispatch(getTotals())]
-  );
-  
+  };
+
+  React.useEffect(() => {
+    callApi();
+  }, [cart, dispatch(getTotals())]);
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link to={"/Perfil"} style={{ textDecoration: "none", color: "inherit" }}>
+        <Link
+          to={"/Perfil"}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <div>
-            <Person2OutlinedIcon sx={{mr: 1, color: '#E66200'}}/>
-          Perfil
+            <Person2OutlinedIcon sx={{ mr: 1, color: "#A90000" }} />
+            Perfil
           </div>
         </Link>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}><div><SettingsOutlinedIcon sx={{mr: 1, color:'#E66200}'}}/></div>Ajustes</MenuItem>
-      <Divider/>
       <MenuItem onClick={handleMenuClose}>
         <div>
-          <LoginOutlinedIcon sx={{mr: 1, color: '#E66200'}}/>
+          <SettingsOutlinedIcon sx={{ mr: 1, color: "#A90000}" }} />
         </div>
-        <Button onClick={() => logout()} style={{ textDecoration: "none", color: "inherit" }}>
+        Ajustes
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleMenuClose}>
+        <div>
+          <LoginOutlinedIcon sx={{ mr: 1, color: "#A90000" }} />
+        </div>
+        <Button
+          onClick={() => logout()}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           Cerrar Sesion
         </Button>
       </MenuItem>
@@ -99,21 +108,26 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{background: "#E66200"}}>
+      <AppBar position="static" sx={{ background: "#A90000" }}>
         <Toolbar>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ justifyContent: 'center' }}
+            sx={{ justifyContent: "center" }}
           >
-           <NavItem style={{ textDecoration: "none", color: "inherit" }}><span className="material-symbols-outlined" style={{padding:3}}>fastfood</span>El Buen Sabor</NavItem>
-
+            <NavItem style={{ textDecoration: "none", color: "inherit" }}>
+              <img
+                src="logo.png"
+                alt=""
+                style={{ maxWidth: "50px", paddingRight: "5px" }}
+              />
+              El Buen Sabor
+            </NavItem>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          {
-          (isAuthenticated) ?
-            <div className='d-flex justify-content-center align-items-center'>
+          {isAuthenticated ? (
+            <div className="d-flex justify-content-center align-items-center">
               <IconButton
                 size="large"
                 edge="end"
@@ -122,16 +136,24 @@ export default function PrimarySearchAppBar() {
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
-                className='col'
+                className="col"
               >
                 <AccountCircle />
               </IconButton>
-              <div className='fs-6 ms-2'>{user?.name}</div>
+              <div className="fs-6 ms-2">{user?.name}</div>
             </div>
-            :
-            <Button onClick={() => loginWithRedirect()} style={{ textDecoration: "none", color: "inherit" }}>Iniciar sesión</Button>
-          }
-          <Link to={"/Cart"} style={{ textDecoration: "none", color: "inherit" }}>
+          ) : (
+            <Button
+              onClick={() => loginWithRedirect()}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Iniciar sesión
+            </Button>
+          )}
+          <Link
+            to={"/Cart"}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <IconButton
               size="large"
               edge="end"
@@ -142,15 +164,13 @@ export default function PrimarySearchAppBar() {
               color="inherit"
             >
               <ShoppingBagIcon />
-              {
-                (cart.cartTotalQuantity > 0)
-                ?
+              {cart.cartTotalQuantity > 0 ? (
                 <span className="bag-quantity">
-                  <span className='fs-5'>{cart.cartTotalQuantity}</span>
+                  <span className="fs-5">{cart.cartTotalQuantity}</span>
                 </span>
-                :
-                <></> 
-              }
+              ) : (
+                <></>
+              )}
             </IconButton>
           </Link>
         </Toolbar>

@@ -16,12 +16,8 @@ interface Content {
 const InicioCard: React.FC<{ content: Content; sucursalId: string }> = ({ content, sucursalId }) => {
   const { url, title, content: cardContent } = content;
   return (
-    <Card sx={{ maxWidth: 345, my: 2  }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={url}
-        title={title}
-      />
+    <Card sx={{ maxWidth: 345, my: 2 }}>
+      <CardMedia sx={{ height: 140 }} image={url} title={title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -31,9 +27,14 @@ const InicioCard: React.FC<{ content: Content; sucursalId: string }> = ({ conten
         </Typography>
       </CardContent>
       <CardActions>
-      <Link to={`/${title}/${sucursalId}`} style={{ textDecoration: 'none', color: 'inherit' }} >
-         <Button sx={{color: '#E66200'}} size="small">Ver más</Button>
-      </Link>
+        <Link
+          to={`/${title}/${sucursalId}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Button sx={{ color: "#A90000" }} size="small">
+            Ver más
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );

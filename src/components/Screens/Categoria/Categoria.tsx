@@ -95,55 +95,70 @@ const Categoria: React.FC = () => {
 
 
     return (
-        <Box sx={{ maxWidth: 1150, margin: '0 auto', padding: 2, my: 10 }}>
-            <Container>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                    <Typography variant="h4">Categoría</Typography>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<AddIcon />}
-                        sx={{
-                            backgroundColor: '#E66200',
-                            "&:hover": {
-                                bgcolor: "grey",
-                            },
-                        }}
-                        onClick={handleAddCategoria}
-                    >
-                        Añadir Categoría
-                    </Button>
-                </Box>
-                {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-                        <CircularProgress sx={{ color: '#fb6376' }} />
-                    </Box>
-                ) : filteredData.length === 0 ? (
-                    <EmptyState
-                        title="No hay categorias cargadas"
-                        description="Agrega nuevas categorias utilizando el formulario."
-                    />
-                ) : (
-                    <>
-                        <Box sx={{ mt: 2 }}>
-                            <SearchBar onSearch={onSearch} />
-                        </Box>
-                        <Stack direction="column" spacing={1} mt={2}>
-                            {renderCategorias(filteredData, 0)}
-                        </Stack>
-                    </>
-                )}
-            </Container>
-            {idSucursal &&
-                <ModalCategoria
-                    modalName="modalCategoria"
-                    initialValues={selectedCategory || initialValue}
-                    isEditMode={isEditing}
-                    getCategoria={fetchCategoria}
-                    categoriaAEditar={isEditing ? selectedCategory : undefined}
-                    idSucursal={sucursalid}
-                />}
-        </Box>
+      <Box sx={{ maxWidth: 1150, margin: "0 auto", padding: 2, my: 10 }}>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+            }}
+          >
+            <Typography variant="h4">Categoría</Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<AddIcon />}
+              sx={{
+                backgroundColor: "#A90000",
+                "&:hover": {
+                  bgcolor: "grey",
+                },
+              }}
+              onClick={handleAddCategoria}
+            >
+              Añadir Categoría
+            </Button>
+          </Box>
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "80vh",
+              }}
+            >
+              <CircularProgress sx={{ color: "#fb6376" }} />
+            </Box>
+          ) : filteredData.length === 0 ? (
+            <EmptyState
+              title="No hay categorias cargadas"
+              description="Agrega nuevas categorias utilizando el formulario."
+            />
+          ) : (
+            <>
+              <Box sx={{ mt: 2 }}>
+                <SearchBar onSearch={onSearch} />
+              </Box>
+              <Stack direction="column" spacing={1} mt={2}>
+                {renderCategorias(filteredData, 0)}
+              </Stack>
+            </>
+          )}
+        </Container>
+        {idSucursal && (
+          <ModalCategoria
+            modalName="modalCategoria"
+            initialValues={selectedCategory || initialValue}
+            isEditMode={isEditing}
+            getCategoria={fetchCategoria}
+            categoriaAEditar={isEditing ? selectedCategory : undefined}
+            idSucursal={sucursalid}
+          />
+        )}
+      </Box>
     );
 };
 

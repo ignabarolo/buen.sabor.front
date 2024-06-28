@@ -105,60 +105,78 @@ const TableInsumo = () => {
     ];
 
     return (
-        <Box component="main" sx={{ flexGrow: 1, my: 2 }}>
-            <Container>
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 3 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Insumos
-                    </Typography>
-                    <Box>
-                        <Button
-                            sx={{
-                                bgcolor: "#E66200",
-                                "&:hover": {
-                                    bgcolor: "grey",
-                                },
-                                mr: 1,
-                                padding: "10px 20px", 
-                                fontSize: "1.0rem" 
-                            }}
-                            variant="contained"
-                            startIcon={<Add />}
-                            onClick={handleAddInsumo}
-                        >
-                            Insumo
-                        </Button>
-
-                    </Box>
-                </Box>
-                {isLoading ? ( // Mostrar componente de carga mientras los datos se están cargando
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-                        <CircularProgress sx={{ color: '#fb6376' }} />
-                    </Box>
-                ) : filteredData.length === 0 ? ( // Mostrar componente de estado vacío si no hay datos
-                    <EmptyState
-                        title="No hay insumos cargados"
-                        description="Agrega nuevos insumos utilizando el formulario."
-                    />
-                ) : (
-                    <>
-                        <Box sx={{ mt: 2 }}>
-                            <SearchBar onSearch={onSearch} />
-                        </Box>
-                        <TableComponent data={filteredData} columns={columns} onDelete={handleDelete} onEdit={handleEdit} />
-                    </>
-                )}
-            </Container>
-            {isModalOpen && selectedArticle &&
-                <ModalInsumo
-                    modalName="modalInsumo"
-                    initialValues={selectedArticle || initialValue}
-                    isEditMode={isEditing}
-                    getInsumos={fetchArticulosInsumos}
-                    insumoAEditar={selectedArticle}
-                />
-            }
-        </Box>
+      <Box component="main" sx={{ flexGrow: 1, my: 2 }}>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              my: 3,
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Insumos
+            </Typography>
+            <Box>
+              <Button
+                sx={{
+                  bgcolor: "#A90000",
+                  "&:hover": {
+                    bgcolor: "grey",
+                  },
+                  mr: 1,
+                  padding: "10px 20px",
+                  fontSize: "1.0rem",
+                }}
+                variant="contained"
+                startIcon={<Add />}
+                onClick={handleAddInsumo}
+              >
+                Insumo
+              </Button>
+            </Box>
+          </Box>
+          {isLoading ? ( // Mostrar componente de carga mientras los datos se están cargando
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "80vh",
+              }}
+            >
+              <CircularProgress sx={{ color: "#fb6376" }} />
+            </Box>
+          ) : filteredData.length === 0 ? ( // Mostrar componente de estado vacío si no hay datos
+            <EmptyState
+              title="No hay insumos cargados"
+              description="Agrega nuevos insumos utilizando el formulario."
+            />
+          ) : (
+            <>
+              <Box sx={{ mt: 2 }}>
+                <SearchBar onSearch={onSearch} />
+              </Box>
+              <TableComponent
+                data={filteredData}
+                columns={columns}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            </>
+          )}
+        </Container>
+        {isModalOpen && selectedArticle && (
+          <ModalInsumo
+            modalName="modalInsumo"
+            initialValues={selectedArticle || initialValue}
+            isEditMode={isEditing}
+            getInsumos={fetchArticulosInsumos}
+            insumoAEditar={selectedArticle}
+          />
+        )}
+      </Box>
     );
 };
 

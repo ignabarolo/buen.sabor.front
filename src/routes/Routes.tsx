@@ -17,9 +17,10 @@ import Pedido from "../components/Screens/Pedido/Pedido";
 import InicioSesionExitoso from "../components/Screens/Usuario/InicioSesionExitoso";
 import PerfilUsuario from "../components/Screens/Usuario/PerfilUsuario";
 import FormPerfil from "../components/Screens/Usuario/FormPerfil";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Rutas: React.FC = () => {
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   return (
     <Router>
       <div className="navbar">

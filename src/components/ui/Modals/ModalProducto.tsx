@@ -280,170 +280,212 @@ const ModalProducto: React.FC<ModalProductoProps> = ({
     }, [selectedInsumoId, insumos]);
 
     return (
-        <GenericModal
-            modalName={modalName}
-            title={isEditMode ? 'Editar Producto' : 'Añadir Producto'}
-            initialValues={productoAEditar || initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-            isEditMode={isEditMode}
-        >
-            <Grid container spacing={2} alignItems="center">
-                <Grid item xs={4}>
-                    <TextFieldValue label="Nombre" name="denominacion" type="text" placeholder="Nombre" disabled={isEditMode} />
-                </Grid>
-                <Grid item xs={4}>
-                    <TextFieldValue label="Descripción" name="descripcion" type="text" placeholder="Descripción" />
-                </Grid>
-                <Grid item xs={4}>
-                    <TextFieldValue label="Precio de venta" name="precioVenta" type="number" placeholder="Precio" />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} alignItems="center">
-                <Grid item xs={4}>
-                    <TextFieldValue label="Tiempo Estimado (minutos)" name="tiempoEstimadoMinutos" type="number" placeholder="Tiempo Estimado" />
-                </Grid>
-                <Grid item xs={4}>
-                    <Box mt={2}>
-                        <FormControl fullWidth>
-                            <label className='label' style={{ color: 'grey' }}>Unidad de Medida del Producto</label>
-                            <Select
-                                labelId="unidadMedidaProductoLabel"
-                                id="unidadMedidaProducto"
-                                value={unidadMedidaProducto}
-                                onChange={(e) => setUnidadMedidaProducto(e.target.value as number)}
-                                displayEmpty
-                                disabled={isEditMode}
-                            >
-                                <MenuItem disabled value="">
-                                    Seleccione una unidad de medida
-                                </MenuItem>
-                                {unidadMedidaOptions.map((unidad) => (
-                                    <MenuItem key={unidad.id} value={unidad.id}>
-                                        {unidad.denominacion}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </Grid>
-                <Grid item xs={4}>
-                    <Box mt={2}>
-                        <FormControl fullWidth>
-                            <label className='label' style={{ color: 'grey' }}>Categoría del Producto</label>
-                            <Select
-                                labelId="categoriaProductoLabel"
-                                id="categoriaProducto"
-                                value={categoriaProducto}
-                                onChange={(e) => setCategoriaProducto(e.target.value as number | '')}
-                                displayEmpty
-                                disabled={isEditMode}
-                            >
-                                <MenuItem disabled value="">
-                                    Seleccione una categoría de producto
-                                </MenuItem>
-                                {categoriaProductoOptions.map((categoria) => (
-                                    <MenuItem key={categoria.id} value={categoria.id}>
-                                        {categoria.denominacion}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                    </Box>
-                </Grid>
-            </Grid>
-
-            <TextFieldValue label="Preparación" name="preparacion" type="textarea" placeholder="Preparación" />
-
-            <Typography variant="h6" align="center" gutterBottom sx={{my:2}}>
-                Ingredientes
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2vh' }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={3}>
-                        <FormControl fullWidth>
-                            <Select
-                                labelId="categoriasInsumoLabel"
-                                id="categoriasInsumo"
-                                value={selectedCategoria || ''}
-                                onChange={(e) => {
-                                    setSelecteCategoria(e.target.value as number);
-                                    setSelectedInsumoId(null);  // Reset insumo selection
-                                    setUnidadMedidaInsumo('N/A');  // Reset unidad de medida
-                                }}
-                                displayEmpty
-                            >
-                                <MenuItem disabled value="">
-                                    Seleccione una categoría de insumo
-                                </MenuItem>
-                                {categoriasInsumo.map((categoria) => (
-                                    <MenuItem key={categoria.id} value={categoria.id}>
-                                        {categoria.denominacion}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <FormControl fullWidth>
-                            <Select
-                                value={selectedInsumoId || ''}
-                                onChange={(e) => setSelectedInsumoId(e.target.value as number)}
-                                displayEmpty
-                                disabled={!selectedCategoria}
-                            >
-                                <MenuItem value="" disabled>
-                                    Seleccione un ingrediente
-                                </MenuItem>
-                                {categoriasInsumo
-                                    .find(categoria => categoria.id === selectedCategoria)
-                                    ?.insumos.map((insumo: IInsumo) => (
-                                        <MenuItem key={insumo.id} value={insumo.id}>
-                                            {insumo.denominacion}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <TextField
-                            type="text"
-                            label="Unidad de Medida"
-                            value={unidadMedidaInsumo}
-                            variant="filled"
-                            disabled
-                        />
-                    </Grid>
-                    <Grid item xs={2}>
-                        <TextField
-                            type="number"
-                            label="Cantidad"
-                            value={cantidadInsumo}
-                            onChange={(e) => setCantidadInsumo(parseFloat(e.target.value))}
-                            variant="filled"
-                            disabled={!selectedInsumoId}
-                        />
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Button
-                            onClick={handleNewIngredient}
-                            variant="contained"
-                            color="primary"
-                            disabled={!selectedInsumoId || cantidadInsumo <= 0}
-                            style={{ backgroundColor: '#E66200', color: '#fff' }}
-                        >
-                            Añadir
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Box>
-            <TableComponent
-                data={dataIngredients}
-                columns={columns}
-                onDelete={onDeleteProductoDetalle}
+      <GenericModal
+        modalName={modalName}
+        title={isEditMode ? "Editar Producto" : "Añadir Producto"}
+        initialValues={productoAEditar || initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        isEditMode={isEditMode}
+      >
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={4}>
+            <TextFieldValue
+              label="Nombre"
+              name="denominacion"
+              type="text"
+              placeholder="Nombre"
+              disabled={isEditMode}
             />
-        </GenericModal>
+          </Grid>
+          <Grid item xs={4}>
+            <TextFieldValue
+              label="Descripción"
+              name="descripcion"
+              type="text"
+              placeholder="Descripción"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextFieldValue
+              label="Precio de venta"
+              name="precioVenta"
+              type="number"
+              placeholder="Precio"
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={4}>
+            <TextFieldValue
+              label="Tiempo Estimado (minutos)"
+              name="tiempoEstimadoMinutos"
+              type="number"
+              placeholder="Tiempo Estimado"
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Box mt={2}>
+              <FormControl fullWidth>
+                <label className="label" style={{ color: "grey" }}>
+                  Unidad de Medida del Producto
+                </label>
+                <Select
+                  labelId="unidadMedidaProductoLabel"
+                  id="unidadMedidaProducto"
+                  value={unidadMedidaProducto}
+                  onChange={(e) =>
+                    setUnidadMedidaProducto(e.target.value as number)
+                  }
+                  displayEmpty
+                  disabled={isEditMode}
+                >
+                  <MenuItem disabled value="">
+                    Seleccione una unidad de medida
+                  </MenuItem>
+                  {unidadMedidaOptions.map((unidad) => (
+                    <MenuItem key={unidad.id} value={unidad.id}>
+                      {unidad.denominacion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box mt={2}>
+              <FormControl fullWidth>
+                <label className="label" style={{ color: "grey" }}>
+                  Categoría del Producto
+                </label>
+                <Select
+                  labelId="categoriaProductoLabel"
+                  id="categoriaProducto"
+                  value={categoriaProducto}
+                  onChange={(e) =>
+                    setCategoriaProducto(e.target.value as number | "")
+                  }
+                  displayEmpty
+                  disabled={isEditMode}
+                >
+                  <MenuItem disabled value="">
+                    Seleccione una categoría de producto
+                  </MenuItem>
+                  {categoriaProductoOptions.map((categoria) => (
+                    <MenuItem key={categoria.id} value={categoria.id}>
+                      {categoria.denominacion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <TextFieldValue
+          label="Preparación"
+          name="preparacion"
+          type="textarea"
+          placeholder="Preparación"
+        />
+
+        <Typography variant="h6" align="center" gutterBottom sx={{ my: 2 }}>
+          Ingredientes
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "2vh",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={3}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="categoriasInsumoLabel"
+                  id="categoriasInsumo"
+                  value={selectedCategoria || ""}
+                  onChange={(e) => {
+                    setSelecteCategoria(e.target.value as number);
+                    setSelectedInsumoId(null); // Reset insumo selection
+                    setUnidadMedidaInsumo("N/A"); // Reset unidad de medida
+                  }}
+                  displayEmpty
+                >
+                  <MenuItem disabled value="">
+                    Seleccione una categoría de insumo
+                  </MenuItem>
+                  {categoriasInsumo.map((categoria) => (
+                    <MenuItem key={categoria.id} value={categoria.id}>
+                      {categoria.denominacion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={3}>
+              <FormControl fullWidth>
+                <Select
+                  value={selectedInsumoId || ""}
+                  onChange={(e) =>
+                    setSelectedInsumoId(e.target.value as number)
+                  }
+                  displayEmpty
+                  disabled={!selectedCategoria}
+                >
+                  <MenuItem value="" disabled>
+                    Seleccione un ingrediente
+                  </MenuItem>
+                  {categoriasInsumo
+                    .find((categoria) => categoria.id === selectedCategoria)
+                    ?.insumos.map((insumo: IInsumo) => (
+                      <MenuItem key={insumo.id} value={insumo.id}>
+                        {insumo.denominacion}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                type="text"
+                label="Unidad de Medida"
+                value={unidadMedidaInsumo}
+                variant="filled"
+                disabled
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                type="number"
+                label="Cantidad"
+                value={cantidadInsumo}
+                onChange={(e) => setCantidadInsumo(parseFloat(e.target.value))}
+                variant="filled"
+                disabled={!selectedInsumoId}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                onClick={handleNewIngredient}
+                variant="contained"
+                color="primary"
+                disabled={!selectedInsumoId || cantidadInsumo <= 0}
+                style={{ backgroundColor: "#A90000", color: "#fff" }}
+              >
+                Añadir
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+        <TableComponent
+          data={dataIngredients}
+          columns={columns}
+          onDelete={onDeleteProductoDetalle}
+        />
+      </GenericModal>
     );
 };
 

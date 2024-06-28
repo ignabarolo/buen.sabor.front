@@ -120,18 +120,23 @@ const TableUnidadMedida: React.FC = () => {
       </Typography>
 
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, my: 0 }}>
+      <Box sx={{ display: "flex", alignItems: "center", mt: 1, my: 0 }}>
         <TextField
           sx={{ mr: 1 }}
           label="Denominación"
           value={denominacion}
           onChange={(e) => setDenominacion(e.target.value)}
         />
-        <Button sx={{ color: '#E66200' }} onClick={handleAdd}>{editId !== null ? 'Actualizar' : 'Agregar'}</Button>
+        <Button sx={{ color: "#A90000" }} onClick={handleAdd}>
+          {editId !== null ? "Actualizar" : "Agregar"}
+        </Button>
       </Box>
       {units.length === 0 ? (
         <Box sx={{ my: 5 }}>
-          <EmptyState title="No hay unidades de medida" description="Agrega nuevas unidades de medida para comenzar" />
+          <EmptyState
+            title="No hay unidades de medida"
+            description="Agrega nuevas unidades de medida para comenzar"
+          />
         </Box>
       ) : (
         <TableComponent
